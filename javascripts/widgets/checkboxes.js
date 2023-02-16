@@ -35,6 +35,14 @@ function checkboxes(widget) {
     controllingCheckbox.indeterminate = true;
   }
 
+  function handleIntermediaryClick(e) {
+    const checkbox = e.target;
+
+    if (checkbox.indeterminate) {
+      checkbox.checked = true;
+    }
+  }
+
   let actions = [];
 
   controllingCheckboxes.forEach((checkbox) => {
@@ -42,6 +50,11 @@ function checkboxes(widget) {
       element: checkbox,
       event: 'change',
       handler: handleControllingCheckboxClick
+    },
+    {
+      element: checkbox,
+      event: 'mousedown',
+      handler: handleIntermediaryClick
     });
   });
 

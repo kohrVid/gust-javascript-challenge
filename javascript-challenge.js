@@ -74,12 +74,22 @@ function checkboxes(widget) {
     controllingCheckbox.checked = false;
     controllingCheckbox.indeterminate = true;
   }
+  function handleIntermediaryClick(e) {
+    var checkbox = e.target;
+    if (checkbox.indeterminate) {
+      checkbox.checked = true;
+    }
+  }
   var actions = [];
   controllingCheckboxes.forEach(function (checkbox) {
     actions.push({
       element: checkbox,
       event: 'change',
       handler: handleControllingCheckboxClick
+    }, {
+      element: checkbox,
+      event: 'mousedown',
+      handler: handleIntermediaryClick
     });
   });
   relatedCheckboxes.forEach(function (checkbox) {
