@@ -59,15 +59,20 @@ function checkboxes(widget) {
     });
   }
   function handleRelatedCheckboxClick(e) {
-    var linkedCheckbox = e.target;
-    var id = linkedCheckbox.getAttribute('kjs-checkbox-id');
+    var relatedCheckbox = e.target;
+    var id = relatedCheckbox.getAttribute('kjs-checkbox-id');
     var controllingCheckbox = widget.querySelector("[kjs-id=\"".concat(id, "\"]"));
-    if (!linkedCheckbox.checked && controllingCheckbox.checked) {
-      controllingCheckbox.indeterminate = true;
+    var allRelatedCheckboxes = Array.prototype.slice.call(widget.querySelectorAll("[kjs-checkbox-id=\"".concat(id, "\"]")));
+    var allCheckboxesEqual = allRelatedCheckboxes.every(function (checkbox) {
+      return relatedCheckbox.checked === checkbox.checked;
+    });
+    if (allCheckboxesEqual) {
+      controllingCheckbox.checked = relatedCheckbox.checked;
+      controllingCheckbox.indeterminate = false;
+      return;
     }
-    if (linkedCheckbox.checked && !controllingCheckbox.checked) {
-      controllingCheckbox.indeterminate = true;
-    }
+    controllingCheckbox.checked = false;
+    controllingCheckbox.indeterminate = true;
   }
   var actions = [];
   controllingCheckboxes.forEach(function (checkbox) {

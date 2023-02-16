@@ -12,19 +12,27 @@ function checkboxes(widget) {
     });
   }
 
-
   function handleRelatedCheckboxClick(e) {
-    const linkedCheckbox = e.target
-    const id = linkedCheckbox.getAttribute('kjs-checkbox-id')
+    const relatedCheckbox = e.target
+    const id = relatedCheckbox.getAttribute('kjs-checkbox-id')
     const controllingCheckbox = widget.querySelector(`[kjs-id="${id}"]`);
 
-    if (!linkedCheckbox.checked && controllingCheckbox.checked) {
-      controllingCheckbox.indeterminate = true;
+    const allRelatedCheckboxes = Array.prototype.slice.call(
+      widget.querySelectorAll(`[kjs-checkbox-id="${id}"]`)
+    );
+
+    const allCheckboxesEqual = allRelatedCheckboxes.every((checkbox) => {
+      return relatedCheckbox.checked === checkbox.checked
+    });
+
+    if (allCheckboxesEqual) {
+      controllingCheckbox.checked = relatedCheckbox.checked;
+      controllingCheckbox.indeterminate = false;
+      return
     }
 
-    if (linkedCheckbox.checked && !controllingCheckbox.checked) {
-      controllingCheckbox.indeterminate = true;
-    }
+    controllingCheckbox.checked = false;
+    controllingCheckbox.indeterminate = true;
   }
 
   let actions = [];
