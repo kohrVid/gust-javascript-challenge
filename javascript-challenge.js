@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function checkboxes(widget) {
   var controllingCheckboxes = widget.querySelectorAll('[kjs-role=controlling-checkbox]');
+  var relatedCheckboxes = widget.querySelectorAll('[kjs-role=related-checkbox]');
   function handleControllingCheckboxClick(e) {
     var controllingCheckbox = e.target;
     var id = controllingCheckbox.getAttribute('kjs-id');
@@ -57,12 +58,30 @@ function checkboxes(widget) {
       checkbox.checked = controllingCheckbox.checked;
     });
   }
+  function handleRelatedCheckboxClick(e) {
+    var linkedCheckbox = e.target;
+    var id = linkedCheckbox.getAttribute('kjs-checkbox-id');
+    var controllingCheckbox = widget.querySelector("[kjs-id=\"".concat(id, "\"]"));
+    if (!linkedCheckbox.checked && controllingCheckbox.checked) {
+      controllingCheckbox.indeterminate = true;
+    }
+    if (linkedCheckbox.checked && !controllingCheckbox.checked) {
+      controllingCheckbox.indeterminate = true;
+    }
+  }
   var actions = [];
   controllingCheckboxes.forEach(function (checkbox) {
     actions.push({
       element: checkbox,
       event: 'change',
       handler: handleControllingCheckboxClick
+    });
+  });
+  relatedCheckboxes.forEach(function (checkbox) {
+    actions.push({
+      element: checkbox,
+      event: 'change',
+      handler: handleRelatedCheckboxClick
     });
   });
   return {
