@@ -70,7 +70,38 @@
 
     <section class="example">
       <h2>Linked Checkboxes</h2>
-      TODO
+      <div kjs-type="checkboxes">
+        <ul class="checkbox">
+          <li>
+            <input kjs-role="controlling-checkbox" kjs-id="1" type="checkbox">
+
+            <ul class="checkbox">
+              <li>
+                <input kjs-role="linked-checkbox" kjs-checkbox-id="1" type="checkbox">
+              </li>
+              <li>
+                <input kjs-role="linked-checkbox" kjs-checkbox-id="1" type="checkbox">
+              </li>
+              <li>
+                <input kjs-role="related-checkbox" kjs-checkbox-id="1" type="checkbox">
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <input kjs-role="controlling-checkbox" kjs-id="2" type="checkbox">
+
+            <ul class="checkbox">
+              <li>
+                <input kjs-role="linked-checkbox" kjs-checkbox-id="2" type="checkbox">
+              </li>
+              <li>
+                <input kjs-role="linked-checkbox" kjs-checkbox-id="2" type="checkbox">
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </section>
 
   </body>
